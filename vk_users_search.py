@@ -70,24 +70,39 @@ class VK:
         return self.photos_dict
 
     def get_best_photos(self):
+        """
+        method sorts photos by likes quantity
+        :return:
+        """
         self.get_photos()
-        sorted_dict_of_photos = dict()
+        self.sorted_dict_of_photos = dict()
         for item in self.photos_dict.items():
             sorted_tuple = sorted(item[1], key=lambda x: x['likes'], reverse=True)
-            sorted_dict_of_photos[item[0]] = sorted_tuple
-        return sorted_dict_of_photos
+            self.sorted_dict_of_photos[item[0]] = sorted_tuple
+        return self.sorted_dict_of_photos
 
     def get_info_by_user_id(self):
+        l = []
         for match_id in self.list_of_ids:
             info = self.vk.users.get(user_id=match_id)
-            yield info[0]['first_name'], info[0]['last_name'], f'link: {URL}{match_id}'
-            break
+            l.append([info[0]['first_name'], info[0]['last_name'], f'link: {URL}{match_id}'])
+            return l
 
 
-if __name__ == '__main__':
-    vv = VK(TOKEN)
-    photo_found = vv.find_people()
-    pprint(photo_found)
-    af = vv.get_info_by_user_id()
-    for name in af:
-        print(name)
+
+# vv = VK(TOKEN)
+# photo_found = vv.get_best_photos()
+#
+# print(photo_found[24128099][0]['link'])
+# a = vv.get_info_by_user_id()
+# print(a)
+# i = 0
+# links = []
+# while i < 3:
+#     links.append(photo_found[24128099][i]['link'])
+#     i += 1
+# print(links)
+
+
+# af = vv.get_info_by_user_id()
+
